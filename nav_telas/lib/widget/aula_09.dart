@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nav_telas/widget/aula_09_dashboard.dart';
 import 'package:nav_telas/widget/aula_09_disciplinas.dart';
+import 'package:go_router/go_router.dart';
 
 class Aula09 extends StatefulWidget {
-  const Aula09({super.key});
+  final String usuario;
+  const Aula09({super.key, required this.usuario});
 
   @override
   State<Aula09> createState() => _Aula09State();
@@ -14,8 +16,7 @@ class _Aula09State extends State<Aula09> {
 
   @override
   Widget build(BuildContext context) {
-    var args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final usuario = widget.usuario;
 
     Future<void> confirmExit() async {
       final confirm = await showDialog<bool>(
@@ -26,12 +27,14 @@ class _Aula09State extends State<Aula09> {
             content: Text('Deseja realmente sair?'),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context, true),
+                // onPressed: () => Navigator.pop(context, true),
+                onPressed: () => context.pop(true),
                 child: Text('Sim'),
               ),
 
               TextButton(
-                onPressed: () => Navigator.pop(context, false),
+                // onPressed: () => Navigator.pop(context, false),
+                onPressed: () => context.pop(false),
                 child: Text('Não'),
               ),
             ],
@@ -40,7 +43,8 @@ class _Aula09State extends State<Aula09> {
       );
 
       if (confirm == true) {
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        context.pop();
       } else {
         setState(() {
           _itemSelecionado = _itemSelecionado;
@@ -49,7 +53,7 @@ class _Aula09State extends State<Aula09> {
     }
 
     final List<Widget> subtelas = [
-      Aula09Dashboard(usuario: args['usuário']!),
+      Aula09Dashboard(usuario: usuario),
       Aula09Disciplinas(),
     ];
 

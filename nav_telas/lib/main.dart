@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nav_telas/classes/login_details.dart';
-import 'package:nav_telas/widget/aula_09.dart';
+import 'package:nav_telas/routes/route.dart';
 import 'package:nav_telas/widget/login_text_field.dart';
 import 'package:collection/collection.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nav_telas/widget/tipo_login.dart';
 
 void main() {
@@ -14,16 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Tela de Login',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(),
-        '/aula09': (context) => const Aula09(),
-      },
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
@@ -76,7 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void validateLogin() {
-    if (_userController.text.isEmpty || _senhaController.text.isEmpty) {
+    if (_userController.text.isEmpty ||
+        _senhaController.text.isEmpty ||
+        _senhaController.text != 'admin') {
       showDialog(
         context: context,
         builder: (context) {
@@ -86,7 +87,8 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  context.pop();
                 },
                 child: Text('OK'),
               ),
@@ -95,11 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
     } else {
-      Navigator.pushNamed(
-        context,
-        '/aula09',
-        arguments: {'usuário': _userController.text},
-      );
+      // Navigator.pushNamed(
+      //   context,
+      //   '/aula09',
+      //   arguments: {'usuário': _userController.text},
+      // );
+      context.push('/aula09', extra: {'usuário': _userController.text});
     }
   }
 
