@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:nav_telas/aula12/model/carrinho_model.dart';
 import 'package:nav_telas/classes/login_details.dart';
 import 'package:nav_telas/routes/route.dart';
 import 'package:nav_telas/widget/login_text_field.dart';
 import 'package:collection/collection.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nav_telas/widget/tipo_login.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CarrinhoModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
